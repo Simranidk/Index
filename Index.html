@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will you be mine?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    #yes-btn {
+      background-color: green;
+      color: white;
+    }
+    #no-btn {
+      background-color: red;
+      color: white;
+    }
+    #crush-img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
+  </style>
+
+  <!-- Include the confetti-js library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+
+  <!-- JavaScript code for triggering confetti effect, changing text, image, and hiding buttons -->
+  <script>
+    function celebrate() {
+      // Change the heading text
+      document.getElementById("heading").innerText = "HE SAID YES!";
+
+      // Change the image URL
+      var img = document.getElementById("crush-img");
+      img.src = "https://media1.tenor.com/m/FsxfVA5RwGAAAAAC/goma-peach.gif";
+
+      // Hide the buttons
+      var btnContainer = document.getElementById("btn-container");
+      btnContainer.style.display = "none";
+
+      // Trigger confetti effect
+      var duration = 5 * 1000; // Duration of the confetti effect (5 seconds)
+      var animationEnd = Date.now() + duration; // Calculate the end time of the confetti effect
+      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 }; // Default confetti settings
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          // Ask for a date after the confetti effect finishes
+          askForDate();
+        }
+
+        var particleCount = 50 * (timeLeft / duration);
+
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        }));
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        }));
+      }, 250);
+    }
+
+    function askForDate() {
+      // Show a pop-up message asking for a date
+      var response = confirm("So... Date? This weekend??");
+
+      // Depending on the user's response, display different messages
+      if (response) {
+        alert("YAYAYAYAYYYYYY OKAYYY PERFECT ❤️❤️❤️❤️");
+      } else {
+        // Show multiple pop-up messages if the user clicks cancel
+        alert("Next weekend?? 😳");
+        alert("Whenever you are free?? 🥺");
+        alert("Don't cancel on me 😱");
+        alert("Last Chance... 😭");
+      }
+    }
+
+    function moveButton() {
+      // Move the "No" button randomly within the window
+      var btnNo = document.getElementById("no-btn");
+      btnNo.style.position = "absolute";
+      btnNo.style.left = Math.random() * (window.innerWidth - btnNo.offsetWidth) + "px";
+      btnNo.style.top = Math.random() * (window.innerHeight - btnNo.offsetHeight) + "px";
+    }
+  </script>
+</head>
+<body>
+  <h1 id="heading">Will you be mine?</h1>
+  <img id="crush-img" src="https://media.tenor.com/qb003OCeBzQAAAAi/peach-goma-peach-and-goma.gif" alt="Image of your crush"> <!-- Initial image URL -->
+  <div id="btn-container" class="btn-container">
+    <button id="yes-btn" class="btn" onclick="celebrate()">Yes</button>
+    <button id="no-btn" class="btn" onmouseover="moveButton()">No</button>
+  </div>
+</body>
+</html>
